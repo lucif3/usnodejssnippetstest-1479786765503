@@ -1,0 +1,39 @@
+ <ul class="w3-navbar w3-theme-d2 w3-left-align">
+  <li class="w3-hide-medium w3-hide-large w3-opennav w3-right">
+    <a class="w3-hover-white w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+  </li>
+  <li><a href="/" class="w3-teal"><i class="fa fa-home w3-margin-right"></i>ProcEase</a></li>
+  <li class="w3-hide-small"><a href="/myapp/teams" class="w3-hover-white">Teams</a></li>
+  <li class="w3-hide-small"><a href="/myapp/get_docs" class="w3-hover-white">Roster</a></li>
+  <li class="w3-hide-small"><a href="/myapp/claims" class="w3-hover-white">Claims</a></li>
+  <li class="w3-hide-small"><a href="/myapp/dbasupp" class="w3-hover-white">Apps & Database Supported</a></li>
+  <li class="w3-hide-small w3-dropdown-hover">
+    <a href="/myapp/repos" title="Repository" class="w3-hover-white">Repository</a>     
+  </li>
+    <li class="w3-hide-small w3-right"><a href="/myapp/credits" class="w3-hover-white">About Us</a></li>
+  <li class="w3-hide-small w3-right w3-dropdown-hover">
+  	<a href="javascript:void();" id='user_id' >Hi, <%= userId %></a>
+  	<div class='w3-dropdown-content w3-white w3-card-4'>
+  	<a href="/login" class="w3-hover-teal" title="Login">
+  		<i class="fa fa-sign-in">Login</i>
+  	</a>
+  	<a href="/logout" class="w3-hover-teal" title="Logout">
+  		<i class="fa fa-sign-out">Logout</i>
+  	</a>
+  	</div>
+  </li>
+ </ul>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="w3-hide w3-hide-large w3-hide-medium">
+    <ul class="w3-navbar w3-left-align w3-theme">
+	<li><a href="/myapp/teams">Teams</a></li>
+	<li><a href="/myapp/get_docs">Roster</a></li>
+	<li><a href="/myapp/claims">Claims</a></li>
+	<li><a href="/myapp/credits">Contact</a></li>
+	<li><a href='/myapp/dbasupp'>Apps & Database Supported</a></li>
+	<li class="w3-dropdown-hover">
+	<a href="/myapp/repos" title="Repository">Repository</a>     
+	</li>
+    </ul>
+  </div>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<title>ProcEase</title>
+<link rel="icon" type="image/png" href="images/icon3.png" >
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="/style/w3.css">
+<link rel="stylesheet" type="text/css" href="/style/w3-theme-black.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Tangerine">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Arima+Madurai">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<style>
+body{
+	background-color: #0a1321;
+}
+.about {
+	font-family: 'Arima Madurai';
+	color:#dbdbdb;
+	font-size:35px;
+	margin:40px auto;
+	padding:5px 10px;
+}
+.loginForm {
+
+	margin:2px;
+	display:block;
+}
+.loginButton {
+	border-radius:4px;
+}
+h1 {
+	font-family:'Tangerine',serif;
+	padding:5px 15px;
+	margin:auto 10%;
+	color:white;
+	font-size:38px;
+}
+.loginForm {
+	font-size:18px;
+	font-family:calibri;
+	padding:0px 35px;
+	color: white;
+	margin: auto  40%;
+}
+.errMsg{
+	color:red;
+}
+</style>
+<body id='MyPage'>
+<!-- Navbar -->
+<div class="w3-top">
+ <ul class="w3-navbar w3-theme-d2 w3-left-align">
+  <li class="w3-hide-medium w3-hide-large w3-opennav w3-right">
+    <a class="w3-hover-white w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+  </li>
+  <li><a href="/" class="w3-teal" id='home'><i class="fa fa-home w3-margin-right"></i>ProcEase</a></li>
+  <li class="w3-hide-small"><a href="/myapp/teams" class="w3-hover-white">Teams</a></li>
+  <li class="w3-hide-small"><a href="/myapp/get_docs" class="w3-hover-white">Roster</a></li>
+  <li class="w3-hide-small"><a href="/myapp/claims" class="w3-hover-white">Claims</a></li>
+  <li class="w3-hide-small w3-right"><a href="/myapp/credits" class="w3-hover-white">About Us</a></li>
+  <li class="w3-hide-small"><a href="/myapp/dbasupp" class="w3-hover-white">Apps & Database Supported</a></li>
+  <li class="w3-hide-small w3-dropdown-hover">
+    <a href="/myapp/repos" title="Repository" class="w3-hover-white">Repository</a>     
+  </li>
+
+ <!-- <li class="w3-hide-small w3-right"><a href="/logout" class="w3-hover-teal" title="Login"><i class="fa fa-sign-out">Logout</i></a></li>-->
+ </ul>
+
+  <!-- Navbar on small screens -->
+ <div id="navDemo" class="w3-hide w3-hide-large w3-hide-medium">
+    <ul class="w3-navbar w3-left-align w3-theme">
+		<li><a href="/myapp/teams">Teams</a></li>
+		<li><a href="/myapp/get_docs">Roster</a></li>
+		<li><a href="/myapp/claims">Claims</a></li>
+		<li><a href="/myapp/credits">Contact</a></li>
+		<li><a href='/myapp/dbasupp'>Apps & Database Supported</a></li>
+		<li class="w3-dropdown-hover">
+			<a href="/myapp/repos" title="Repository">Repository</a>     
+		</li>
+    </ul>
+ </div>
+</div>
+<div id="login" class='about'>
+<h1>Welcome to <strong>ProcEase</strong>, please login.</h1>
+	<div class="loginForm"> 
+			<p id='p_fail' class='errMsg' style='width:150%'></p>
+			<div class='formInput'>
+				User ID:<input id='uId' type="text" name="Username"><br>
+				Password: <input id='pwd' type="password" name="Password"><br>
+				<a href="#">Forgot Password?</a><br>
+			</div>
+		<button class="w3-btn w3-blue loginButton"  onclick="loginValidate()" value="Login">Login</button>
+		<div id='loadingImage'></div>
+	</div>
+
+</div>
+<script type="text/javascript" src="/scripts/util.js"></script>
+<script>
+function w3_open() {
+    var x = document.getElementById("mySidenav");
+    x.style.width = "300px";
+    x.style.textAlign = "center";
+    x.style.fontSize = "40px";
+    x.style.paddingTop = "10%";
+    x.style.display = "block";
+}
+function w3_close() {
+    document.getElementById("mySidenav").style.display = "none";
+}
+
+// Used to toggle the menu on smaller screens when clicking on the menu button
+function openNav() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+function loginValidate(){
+	console.log('abcd');
+	var Username=document.getElementById('uId').value;
+	var Password=document.getElementById('pwd').value;
+	var p_fail=document.getElementById('p_fail');
+	var userDoc={
+		'Username' :Username,
+		'Password': Password
+	}
+	if (Username ===""){
+		alert('Username is mandatory');
+	} else if ( Password==="" ){
+		alert('Password is mandatory');
+	} else {
+		showLoadingMessage();
+		xhrPost('/loginValidate',userDoc,function(data){
+			if (data ==='SUCCESS'){
+				p_fail.innerHTML='';
+				stopLoadingMessage();
+				document.getElementById('home').click();
+			} else if (data ==='WP'){
+				stopLoadingMessage();
+				p_fail.innerHTML='Wrong Passsword';
+			} else if (data ==='WU'){
+				stopLoadingMessage();
+				p_fail.innerHTML='User Id doesn\'t exist';
+			}
+		})
+	}
+}
+function showLoadingMessage()
+{
+	document.getElementById('loadingImage').innerHTML = 'Logging in, please wait....<img height="50" width="50" src="/images/loading_hourglass.gif"></img>';
+}
+function stopLoadingMessage()
+{
+	document.getElementById('loadingImage').innerHTML = "";
+}
+
+$('#pwd').keyup(function(e){
+if(e.keyCode == 13)
+{
+ loginValidate();
+}
+});
+
+
+</script>
+</body>
+</html>

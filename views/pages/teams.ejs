@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<title>Teams</title>
+<link rel="icon" type="image/png" href="/images/icon3.png" >
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="/style/w3.css">
+<link rel="stylesheet" type="text/css" href="/style/w3-theme-black.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Tangerine">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Arima+Madurai">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<style>
+body{
+	background-color: #0a1321;
+}
+.about {
+	font-family: 'Arima Madurai';
+	color:#dbdbdb;
+	font-size:30px;
+
+	padding:5px 10px;
+}
+.about-page {
+
+	margin:2px;
+	display:block;
+}
+h4 {
+	font-family:'Tangerine',serif;
+	padding:5px 15px;
+	color:white;
+	font-size:38px;
+}
+p {
+	font-size:18px;
+	font-family:calibri;
+	padding:0px 35px;
+	color: white;
+}
+.team-theme{
+	font-size:18px;
+	font-family:Sans serif;
+	padding-top:5px;
+	padding-left:4px;
+	list-style-type: none;
+}
+.team-mem{
+	font-size: 24px;
+	font-family:'Tangerine';
+	font-weight:bold;
+	padding-left: 15px;
+}
+button{
+	margin-right: 4px;
+	margin-top:-30px;
+	font-size:14px;
+}
+.button-bottom{
+	margin-top:15px;
+	margin-left:5px;
+}
+</style>
+<body id='MyPage' onload="startFn(); getTeamList()">
+<!-- Navbar -->
+<div class="w3-top">
+	<% include ../partials/navbar.ejs %>
+</div>
+<div class='w3-container w3-padding-64 about ' id='detailsDiv'>
+	Teams:
+	<div class='w3-padding-16 w3-theme-l1 team-theme'>EAI: A One liner about the team goes here.
+		<div id='loadingImage_EAI'></div>
+		<button class='w3-right w3-btn w3-teal' onclick='populateHTML("EAI")'>Refresh</button>
+		<button id='EAI_Update' class='w3-right w3-btn w3-teal' onclick='editTeam("EAI")'>Update Team</button>
+		<button id='EAI_add' class='w3-right w3-btn w3-teal' onclick='addRow("EAI")' style='display:none'>+Add Row</button>
+		<div id='EAI'> </div>
+		<button id='EAI_submit' class='w3-btn w3-teal button-bottom' onclick='submitTeam("EAI")' style='display:none'>Submit</button>
+	</div>
+	<div class='w3-padding-16 w3-theme-l5 team-theme'>Retail Java: A One liner about the team goes here.
+		<div id='loadingImage_Retail Java'></div>
+		<button class='w3-right w3-btn w3-teal' onclick='populateHTML("Retail Java")'>Refresh</button>
+		<button id='Retail Java_Update' class='w3-right w3-btn w3-teal' onclick='editTeam("Retail Java")'>Update Team</button>
+		<button id='Retail Java_add' class='w3-right w3-btn w3-teal' onclick='addRow("Retail Java")' style='display:none'>+Add Row</button>
+		<div id='Retail Java'> </div>
+		<button id='Retail Java_submit' class='w3-btn w3-teal' onclick='submitTeam("Retail Java")' style='display:none'>Submit</button>
+	</div>
+	<div class='w3-padding-16 w3-theme-l1 team-theme'>EA PM Corp: A One liner about the team goes here.
+		<div id='loadingImage_EA PM Corp'></div>
+		<button class='w3-right w3-btn w3-teal' onclick='populateHTML("EA PM Corp")'>Refresh</button>
+		<button id='EA PM Corp_Update' class='w3-right w3-btn w3-teal' onclick='editTeam("EA PM Corp")'>Update Team</button>
+		<button id='EA PM Corp_add' class='w3-right w3-btn w3-teal' onclick='addRow("EA PM Corp")' style='display:none'>+Add Row</button>
+		<div id='EA PM Corp'> </div>
+		<button id='EA PM Corp_submit' class='w3-btn w3-teal' onclick='submitTeam("EA PM Corp")' style='display:none'>Submit</button>
+	</div>
+	<div class='w3-padding-16 w3-theme-l5 team-theme'>IBMApps: A One liner about the team goes here.
+		<div id='loadingImage_IBMApps'></div>
+		<button class='w3-right w3-btn w3-teal' onclick='populateHTML("IBMApps")'>Refresh</button>
+		<button id='IBMApps_Update' class='w3-right w3-btn w3-teal' onclick='editTeam("IBMApps")'>Update Team</button>
+		<button id='IBMApps_add' class='w3-right w3-btn w3-teal' onclick='addRow("IBMApps")' style='display:none'>+Add Row</button>
+		<div  id='IBMApps'> </div>
+		<button id='IBMApps_submit' class='w3-btn w3-teal' onclick='submitTeam("IBMApps")' style='display:none'>Submit</button>
+	</div>
+	<div class='w3-padding-16 w3-theme-l1 team-theme'>RDW: A One liner about the team goes here.
+		<div id='loadingImage_RDW'></div>
+		<button class='w3-right w3-btn w3-teal' onclick='populateHTML("RDW")'>Refresh</button>
+		<button id='RDW_Update' class='w3-right w3-btn w3-teal' onclick='editTeam("RDW")'>Update Team</button>
+		<button id='RDW_add' class='w3-right w3-btn w3-teal' onclick='addRow("RDW")' style='display:none'>+Add Row</button>
+		<div id='RDW'> </div>
+		<button id='RDW_submit' class='w3-btn w3-teal' onclick='submitTeam("RDW")' style='display:none'>Submit</button>
+	</div>
+	<div class='w3-padding-16 w3-theme-l5 team-theme'>AppDBA: A One liner about the team goes here.
+		<div id='loadingImage_AppDBA'></div>
+		<button class='w3-right w3-btn w3-teal' onclick='populateHTML("AppDBA")'>Refresh</button>
+		<button id='AppDBA_Update' class='w3-right w3-btn w3-teal' onclick='editTeam("AppDBA")'>Update Team</button>
+		<button id='AppDBA_add' class='w3-right w3-btn w3-teal' onclick='addRow("AppDBA")' style='display:none'>+Add Row</button>
+		<div id='AppDBA'> </div>
+		<button id='AppDBA_submit' class='w3-btn w3-teal' onclick='submitTeam("AppDBA")' style='display:none'>Submit</button>
+	</div>
+</div>
+<footer class="w3-container w3-padding-32 w3-theme-d1 w3-center">
+	<% include ../partials/footer.ejs %>
+</footer>
+<script>
+function w3_open() {
+    var x = document.getElementById("mySidenav");
+    x.style.width = "300px";
+    x.style.textAlign = "center";
+    x.style.fontSize = "40px";
+    x.style.paddingTop = "10%";
+    x.style.display = "block";
+}
+function w3_close() {
+    document.getElementById("mySidenav").style.display = "none";
+}
+
+// Used to toggle the menu on smaller screens when clicking on the menu button
+function openNav() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+function startFn(){
+	console.log(document.getElementById('user_id').innerHTML);
+	if (document.getElementById('user_id').innerHTML==='Hi, Guest'){
+		$('[title=Login]').show();
+		$('[title=Logout]').hide();
+	}else {
+		$('[title=Login]').hide();
+		$('[title=Logout]').show();
+	}
+}
+</script>
+<script type="text/javascript" src="/scripts/util.js"></script>
+<script type="text/javascript" src="/scripts/teams.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<html>
+<head> 
+<title>Roster</title>
+<link rel="icon" type="image/png" href="/images/icon3.png" > 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="/style/w3.css">
+<link rel="stylesheet" type="text/css" href="/style/w3-theme-black.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Tangerine">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Arima+Madurai">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="/style/style.css" />
+<script src="/scripts/monthpicker.js"></script>
+<style>
+body{
+	background-color: #0a1321;
+}
+.bodyDiv {
+	font-family: 'Sans serif';
+	color:#dbdbdb;
+	font-size:13px;
+}
+p{
+	color:white;
+}
+
+</style>
+
+</head>
+<body id='MyPage' onload="startFn();getTeamList();">
+<!-- Navbar -->
+<div class="w3-top">
+	<% include ../partials/navbar.ejs %>
+</div>
+<div class="w3-container w3-padding-64 bodyDiv">
+<p>Select a Team and month:</p>
+	<form id="formRoster" name="formRoster">
+	</form>
+	<button id="getTeamData" class=" w3-btn w3-teal" value="teamData" onclick='getTDList("")' disabled='true'>Get Roster</button>
+	<br>
+	<script type="text/javascript" src="/scripts/util.js"></script>
+	<script type="text/javascript" src="/scripts/roster.js"></script> 
+
+	<p id="failOutput" class="errorMsg"> </p>
+	<p id="successOutput"> </p>
+	<p id='warningOutput' class="warningMsg">
+	<div id='viewOptions' > 
+		<input type='radio' name='viewType' value='MonthView' onclick='showMonth()'>Month View</input>
+		<input type='radio' name='viewType' value='WeekView' onclick='showWeek()' >Week View</input>
+	</div>
+	<br>
+	<div id='loadingImage'></div>
+	<div id='buttonsDiv' style="display:none">
+		<button class=" w3-btn w3-teal" onclick="editRoster()">Edit</button>
+		<button class=" w3-btn w3-teal" onclick="deleteRoster()">Delete</button>
+		<button class=" w3-btn w3-teal" onclick="refreshRoster()">Reset</button>
+		<button id='rosterSubmit' class=" w3-btn w3-teal" onclick="updateRoster()" >Submit Changes</button>
+		<button id='rosterDownload' class=" w3-btn w3-teal" onclick="downloadRoster()">Download Roster</button>
+	</div>
+	<br>
+	<div id='viewOptionsForList'>
+		View by:
+		<input type='radio' name='viewTypeForList' value='listByMonth' onclick='getTDList("")'>Month</input>
+		<input type='radio' name='viewTypeForList' value='listByWeek' onclick='listByWeek()'>Week</input>
+		<input type='radio' name='viewTypeForList' value='listByDate' onclick='listByDate()'>Date</input>
+	</div>
+	<div id='viewMonthOutput' class='mView'>
+		<table id='tableMonthOutput' class='records' border='0' cellspacing='0' cellpadding='0'>
+			<tbody id='tbodyMonthOutput'>
+	
+			</tbody>
+		</table>		
+	</div>
+	<div id='viewWeekOutput' class='wView'>
+		<table id='tableWeekOutput' class='records' border='0' cellspacing='0' cellpadding='0'>
+			<tbody id='tbodyWeekOutput'>
+			</tbody>
+		</table>
+	</div>
+	<div id='viewDateOutput' class='dView'>
+		<div id='multipleDatesInput'>
+		</div>
+
+		<table id='tableDateOutput' class='records' border='0' cellspacing='0' cellpadding='0'>
+			<tbody id='tbodyDateOutput'>
+			</tbody>
+		</table>
+	</div>
+	<div id='moveButtons' style='display:none'>
+		<button class=" w3-btn w3-teal" id='prev' onclick="prevRow()">Previous Week</button>
+		<button class=" w3-btn w3-teal" id='next' onclick="nextRow()">Next Week</button>
+		<button class=" w3-btn w3-teal" id='submitRoster' onClick='submitWeekRoster()'>Submit Roster</button>
+	</div>
+	<br>
+</div>
+	<script type="text/javascript" src="/scripts/util.js"></script>
+	<script type="text/javascript" src="/scripts/roster.js"></script> 
+<footer class="w3-container footer-extend w3-theme-d1 w3-center ">
+	<% include ../partials/footer.ejs %>
+</footer>
+<script>
+function w3_open() {
+    var x = document.getElementById("mySidenav");
+    x.style.width = "300px";
+    x.style.textAlign = "center";
+    x.style.fontSize = "40px";
+    x.style.paddingTop = "10%";
+    x.style.display = "block";
+}
+function w3_close() {
+    document.getElementById("mySidenav").style.display = "none";
+}
+
+// Used to toggle the menu on smaller screens when clicking on the menu button
+function openNav() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+function startFn(){
+	console.log(document.getElementById('user_id').innerHTML);
+	if (document.getElementById('user_id').innerHTML==='Hi, Guest'){
+		$('[title=Login]').show();
+		$('[title=Logout]').hide();
+	}else {
+		$('[title=Login]').hide();
+		$('[title=Logout]').show();
+	}
+}
+</script>
+</body>
+</html>

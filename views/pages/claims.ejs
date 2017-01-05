@@ -1,0 +1,106 @@
+<html>
+<head> 
+<title>Claims</title>
+<link rel="icon" type="image/png" href="/images/icon3.png" > 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link rel="stylesheet" type="text/css" href="/style/w3.css">
+<link rel="stylesheet" type="text/css" href="/style/w3-theme-black.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Tangerine">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Arima+Madurai">
+  <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="/style/style.css" />
+<script src="/scripts/monthpicker.js"></script>
+<style>
+body{
+	background-color: #0a1321;
+}
+.bodyDiv {
+	font-family: 'Sans serif';
+	color:#dbdbdb;
+	font-size:13px;
+}
+h4{
+	font-family:'Arima Madurai';
+}
+p{
+	color:white;
+}
+.halves{
+	padding-left:15px;
+	padding-top:35px;
+	padding-right:10px;
+	color:white;
+	
+}
+
+</style>
+
+</head>
+<body id='MyPage' onload="startFn();getTeamList();">
+<!-- Navbar -->
+	<div class="w3-top">
+		<% include ../partials/navbar.ejs %>
+	</div>
+	
+	<div class="w3-container w3-padding-64 bodyDiv">
+	<p>Select a Team and month:</p>
+		<form id="formRoster" name="formRoster">
+		</form>
+		<div id='loadingImage'></div>
+		<button id="getTeamData" class="w3-btn w3-teal" value="teamData" onclick='checkRoster()' disabled='true'>Get Roster</button>
+		<p id='p_fail'></p>
+		<p id='p_success'></p>
+		<button id="p_button" class="w3-btn w3-teal" onclick='generateClaimsSheet()' style='display:none'>Get Claims</button>
+	</div>	
+	<script type="text/javascript" src="/scripts/util.js"></script>
+	<script type="text/javascript" src="/scripts/claims.js"></script>
+	<footer class="w3-container footer-extend w3-theme-d1 w3-center ">
+		<% include ../partials/footer.ejs %>
+	</footer>
+	<script>
+		function w3_open() {
+		    var x = document.getElementById("mySidenav");
+		    x.style.width = "300px";
+		    x.style.textAlign = "center";
+		    x.style.fontSize = "40px";
+		    x.style.paddingTop = "10%";
+		    x.style.display = "block";
+		}
+		function w3_close() {
+		    document.getElementById("mySidenav").style.display = "none";
+		}
+
+		// Used to toggle the menu on smaller screens when clicking on the menu button
+		function openNav() {
+		    var x = document.getElementById("navDemo");
+		    if (x.className.indexOf("w3-show") == -1) {
+			x.className += " w3-show";
+		    } else { 
+			x.className = x.className.replace(" w3-show", "");
+		    }
+		}
+		var changeFn =function() {
+  				document.getElementById('p_fail').innerHTML="";
+				document.getElementById('p_success').innerHTML="";
+				$('#p_button').hide();
+		};
+		function startFn(){
+			console.log(document.getElementById('user_id').innerHTML);
+			if (document.getElementById('user_id').innerHTML==='Hi, Guest'){
+				$('[title=Login]').show();
+				$('[title=Logout]').hide();
+			}else {
+				$('[title=Login]').hide();
+				$('[title=Logout]').show();
+			}
+		}
+	</script>
+</body>
+</html>

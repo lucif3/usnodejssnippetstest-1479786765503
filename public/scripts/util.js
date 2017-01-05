@@ -15,11 +15,32 @@ function createXHR(){
 }
 function xhrGet(url, callback, errback){
 	var xhr = new createXHR();
+	console.log("URL specified is:"+url);
 	xhr.open("GET", url, true);
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4){
 			if(xhr.status == 200){
+				console.log(xhr.responseText);
 				callback(parseJson(xhr.responseText));
+			}else{
+				errback('service not available');
+			}
+		}
+	};
+	
+	xhr.timeout = 100000;
+	xhr.ontimeout = errback;
+	xhr.send();
+}
+function xhrGet2(url,errback){
+	var xhr = new createXHR();
+	console.log("URL specified is:"+url);
+	xhr.open("GET", url, true);
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4){
+			if(xhr.status == 200){
+				console.log(xhr.responseText);
+				//callback(parseJson(xhr.responseText));
 			}else{
 				errback('service not available');
 			}
@@ -37,7 +58,7 @@ function xhrPut(url, data, callback, errback){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4){
 			if(xhr.status == 200){
-				callback();
+				callback(parseJson(xhr.responseText));
 			}else{
 				errback('service not available');
 			}
@@ -91,7 +112,7 @@ function xhrDelete(url, callback, errback){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4){
 			if(xhr.status == 200){
-				callback();
+				callback(parseJson(xhr.responseText));
 			}else{
 				errback('service not available');
 			}

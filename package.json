@@ -7,16 +7,19 @@
   },
   "dependencies": {
     "express": "4.13.x",
+    "express-session": "1.14.x",
+    "cookie-parser": "1.4.x", 
     "ejs": "2.4.x",
     "cloudant": "1.4.x",
     "body-parser": "1.14.x",
     "method-override": "2.3.x",
     "morgan": "1.6.x",
     "errorhandler": "1.4.x",
-    "connect-multiparty": "2.0.x"
+    "connect-multiparty": "2.0.x",
+    "json2xls":"0.1.x"
   },
   "repository": {},
   "engines": {
-  	"node": "4.x"
+  "node": "4.x"
   }
 }

@@ -1,0 +1,108 @@
+<html>
+<head> 
+<title>Repository</title>
+<link rel="icon" type="image/png" href="/images/icon3.png" > 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link rel="stylesheet" type="text/css" href="/style/w3.css">
+<link rel="stylesheet" type="text/css" href="/style/w3-theme-black.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Tangerine">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Arima+Madurai">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="stylesheet" type='text/css' href='/style/style.css'>
+<style>
+body{
+	background-color: #0a1321;
+}
+.bodyDiv {
+	font-family: 'Sans serif';
+	color:#dbdbdb;
+	font-size:13px;
+}
+h4{
+	font-family:'Arima Madurai';
+}
+.content{
+	color:lightskyblue;
+	font-family:calibri;
+	width:85%;
+}
+.halves{
+	padding-left:15px;
+	padding-top:35px;
+	padding-right:0px;
+	color:white;
+	
+}
+
+</style>
+
+</head>
+<body id='MyPage' onload="startFn();refreshLeft();">
+<!-- Navbar -->
+<div class="w3-top">
+	<% include ../partials/navbar.ejs %>
+</div>
+	<div class='w3-half leftHalf halves'>
+		<h4>List of Files in database:</h4>
+		<div id='loadingImage_left'></div>
+		<table>
+			<tbody id='attachmentDoc'></tbody>
+		</table>
+	</div>
+	
+	<div class='w3-half rightHalf halves'>
+		<h4>Select a file and click upload. </h4>
+		<div id='loadingImage_right'></div>
+		<input name="file" id="upload_file" type="file" >
+		<input value="Upload" class='w3-right w3-btn w3-teal w3-margin-right' onclick="uploadFile(this)" type="submit" >
+		<p id='p_fail' class='errMsg'></p>
+		<p id='p_success'></p>
+	</div>
+	<script type="text/javascript" src="/scripts/util.js"></script>
+	<script type="text/javascript" src="/scripts/repos.js"></script>
+<footer class="w3-container footer-extend w3-theme-d1 w3-center ">
+	<% include ../partials/footer.ejs %>
+</footer>
+<script>
+function w3_open() {
+    var x = document.getElementById("mySidenav");
+    x.style.width = "300px";
+    x.style.textAlign = "center";
+    x.style.fontSize = "40px";
+    x.style.paddingTop = "10%";
+    x.style.display = "block";
+}
+function w3_close() {
+    document.getElementById("mySidenav").style.display = "none";
+}
+
+// Used to toggle the menu on smaller screens when clicking on the menu button
+function openNav() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+function startFn(){
+	console.log(document.getElementById('user_id').innerHTML);
+	if (document.getElementById('user_id').innerHTML==='Hi, Guest'){
+		$('[title=Login]').show();
+		$('[title=Logout]').hide();
+	}else {
+		$('[title=Login]').hide();
+		$('[title=Logout]').show();
+	}
+}
+
+</script>
+</body>
+</html>

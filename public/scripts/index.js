@@ -68,7 +68,7 @@ function uploadFile(node)
 {
 	
 	var file = node.previousSibling.files[0];
-	
+	console.log('File is: '+ file);
 	//if file not selected, throw error
 	if(!file)
 	{
@@ -77,20 +77,23 @@ function uploadFile(node)
 	}
 	
 	var row = node.parentNode.parentNode;
-	
+	console.log( row);
 	var form = new FormData();
+	console.log(form);
 	form.append("file", file);
+	console.log(form);
 	
 	var id = row.getAttribute('data-id');
-	
+	console.log('ID is:'+id);
 	var queryParams = "id=" + (id==null?-1:id);
 	queryParams+= "&name="+row.firstChild.firstChild.value;
 	queryParams+="&value="+row.firstChild.nextSibling.firstChild.firstChild.firstChild.firstChild.firstChild.value;
-	
+	console.log('Query is '+queryParams);
 	
 	var table = row.firstChild.nextSibling.firstChild;	
+	console.log(table);
 	var newRow = addNewRow(table);	
-	
+	console.log(newRow);
 	startProgressIndicator(newRow);
 	
 	xhrAttach(REST_DATA+"/attach?"+queryParams, form, function(item){	

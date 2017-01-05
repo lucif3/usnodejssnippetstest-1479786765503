@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<title>Apps & DBs</title>
+<link rel="icon" type="image/png" href="/images/icon3.png" ></link>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="/style/w3.css">
+<link rel="stylesheet" type="text/css" href="/style/w3-theme-black.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Tangerine">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Arima+Madurai">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<style>
+body{
+	background-color: #0a1321;
+	
+}
+.dblisting {
+	font-family: 'Arima Madurai';
+	font-size:13px;
+	padding:5px 10px;
+	color:white;
+}
+.dblisting-container {
+	margin:2px;
+}
+table{
+	border: solid;
+	width:100%;
+	border-color:darkgrey;
+}
+td,th {
+	border: solid;
+	
+}
+th{
+	font-family:calibri;
+	border-color:grey;
+}
+</style>
+<body id='MyPage' onload="startFn();loadDBList();">
+<!-- Navbar -->
+<div class="w3-top">
+	<% include ../partials/navbar.ejs %>
+</div>
+<div class='w3-container w3-padding-64 w3-center dblisting' id='dbListing' >
+<p id='p_fail'></p>
+	<div id='loadingImage'></div>
+	<table id='dbContainerTable'>
+		<tbody id='dbContainerTbody'></tbody>
+	</table>
+</div>
+<footer class="w3-container w3-padding-32 w3-theme-d1 w3-center">
+	<% include ../partials/footer.ejs %>
+</footer>
+<script type="text/javascript" src="/scripts/util.js"></script>
+<script>
+function w3_open() {
+    var x = document.getElementById("mySidenav");
+    x.style.width = "300px";
+    x.style.textAlign = "center";
+    x.style.fontSize = "40px";
+    x.style.paddingTop = "10%";
+    x.style.display = "block";
+}
+function w3_close() {
+    document.getElementById("mySidenav").style.display = "none";
+}
+
+// Used to toggle the menu on smaller screens when clicking on the menu button
+function openNav() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+function startFn(){
+	console.log(document.getElementById('user_id').innerHTML);
+	if (document.getElementById('user_id').innerHTML==='Hi, Guest'){
+		$('[title=Login]').show();
+		$('[title=Logout]').hide();
+	}else {
+		$('[title=Login]').hide();
+		$('[title=Logout]').show();
+	}
+}
+function showLoadingMessage()
+{
+	document.getElementById('loadingImage').innerHTML = 'Loading data <img height="75" width="75" src="/images/loading.gif"></img>';
+}
+function stopLoadingMessage()
+{
+	document.getElementById('loadingImage').innerHTML = "";
+}
+function loadDBList(){
+	showLoadingMessage();
+	var dbcontainer=document.getElementById('dbListing');
+	xhrGet('/myapp/getdbdoc',function(data){
+		if (data !== 'FILE NOT FOUND' ) {
+			document.getElementById('p_fail').innerHTML="";
+			var receivedData=data || [];
+			var tbodyNode=document.getElementById('dbContainerTbody');
+			var tableHeader="<tr name='JSONHeader'class='headerTable' ><th class='content checkBox'>Application Name</th><th class='content' class='headerTable' >Description</th><th class='content' class='headerTable' >Business Unit</th><th class='content' class='headerTable' >Environment</th><th class='content' class='headerTable' >Server</th><th class='content' class='headerTable' >IP</th><th class='content' class='headerTable'>Database Name</th><th class='content' class='headerTable' >Application Server</th><th class='content' class='headerTable' >Support Lead</th></tr>";
+			var tableRows="";
+			for (var i=0; i<receivedData.length; i++){
+				var rowData=receivedData[i];
+				stopLoadingMessage();
+				tableRows+="<tr class='trDBOutput' name='JSONData3'><td class='insertContent' >"+rowData[0]+"</td><td class='insertContent' >"+rowData[1]+"</td><td class='insertContent' >"+rowData[2]+"</td><td class='insertContent' >"+rowData[3]+"</td><td class='insertContent' >"+rowData[4]+"</td><td class='insertContent'>"+rowData[5]+"</td><td class='insertContent' >"+rowData[6]+"</td><td class='insertContent' >"+rowData[7]+"</td><td class='insertContent' >"+rowData[8]+"</td></tr>";
+			}
+			tbodyNode.innerHTML=tableHeader+tableRows;
+		} else {
+			document.getElementById('p_fail').innerHTML="Error getting file from database";
+		}
+	},function(err){
+		console.log(err);
+	});
+}
+
+</script>
+</body>
+</html>
